@@ -1,0 +1,9 @@
+extends layouts/main-layout.pug
+block content
+    h1 List of Products
+    if products.length <= 0
+        h3 Empty Catalogues 
+    else
+        each product in products 
+            p 
+                h3 id: #{product.id} - #{product.title} 

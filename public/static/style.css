@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+}
+header nav ul {
+    display: flex;
+    flex-direction: row;
+}
+
+header nav ul li {
+    list-style: none;
+    margin-left: 10px;
+}
+
+header nav {
+    background-color: rgb(213, 235, 253);
+    align-items: center;
+    padding: 10px;
+    margin: 0;
+}
+
+.btn {
+    margin: 2%;
+    padding: 10px;
+    background: transparent;
+    border: 2px plum solid;
+    border-radius: 10px;
+}
+
+input.text {
+    margin: 2%;
+    padding: 10px;
+    background: transparent;
+    border: 2px plum solid;
+    border-radius: 5px;
+}
+
+header {
+    margin: 0;
+}
+main {
+    margin: 10%;
+}

@@ -1,14 +1,15 @@
 import express, {Express, Response, Request, NextFunction} from "express";
-import * as fs from 'fs';
+import path from 'path';
+import { getAddProduct, postAddProduct } from '../controllers';
 
-const html = fs.readFileSync('./index.html', 'utf-8');
-const route = express.Router()
+const Router = express.Router()
+ function admin() {
+    Router.post('/', postAddProduct);
 
-export default function admin() {
+    // render page
+    Router.get('/', getAddProduct);
 
-    route.get('/', (req: Request, res: Response, next: NextFunction) => {
-        res.send(html);
-    })
-
-    return route;
+    return Router;
 }
+
+export default admin;
