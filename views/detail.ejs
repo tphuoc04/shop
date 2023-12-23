@@ -1,0 +1,13 @@
+<%- include("./layouts/head.ejs") %>
+</head>
+<body>
+    <%- include('./layouts/navigation.ejs') %>
+    <main>
+        <h1><%= name %></h1>
+        <p>Price: <%= price%></p>
+        <form action="/cart/<%= id %>" method="post">
+            <input type="number" placeholder="Quantity" name="quantity" />
+            <button> Add to Cart</button>
+        </form>
+    </main>
+<%- include("./layouts/end.ejs") %>

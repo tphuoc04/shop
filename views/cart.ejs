@@ -1,0 +1,21 @@
+<%- include("./layouts/head.ejs") %>
+</head>
+<body>
+    <%- include('./layouts/navigation.ejs') %>
+    <main>
+        <h1>Cart</h1>
+        <% if (Object.keys(cartProducts).length > 0) { %>
+            <ul>
+            <% for(let key in cartProducts) { %>
+                <li>
+                    <%= cartProducts[key].name %> - <%= cartProducts[key].price %>
+                    <br>
+                    <p>quantity: <%= cartProducts[key].quantity %> total: <%= cartProducts[key].total %>
+                </li>
+            <% } %>
+            </ul>
+        <% } else { %>
+            <h2>Cart Empty</h2>
+        <% } %>
+    </main>
+<%- include("./layouts/end.ejs") %>

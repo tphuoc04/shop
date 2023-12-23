@@ -3,15 +3,15 @@ import http from 'http';
 import bodyParser from 'body-parser';
 import path from 'path';
 // Import Routes
-import { admin, shop } from "./routes";
+import { admin, shop, cart } from "./src/routes";
 
 //import controller
-import { get404 } from './controllers';
+import { get404 } from './src/controllers';
 
 const app: Express = express();
  
 // helpers
-app.set("view engine", 'pug');
+app.set("view engine", 'ejs');
 app.set('views', "views");
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(path.join(__dirname, 'public')))
@@ -25,6 +25,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // App
 app.use('/',shop());
 app.use("/add-product", admin());
+app.use("/cart", cart());
 
 // 404
 app.use(get404);

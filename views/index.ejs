@@ -1,0 +1,20 @@
+<%- include("./layouts/head.ejs") %>
+</head>
+<body>
+    <%- include('./layouts/navigation.ejs') %>
+    <main>
+    <h1>Products</h1>
+    <% if (Object.keys(products).length > 0) { %>
+        <ul class="product-list">
+            <% for (let key in products) { %>
+                <li>
+                    <%= products[key].name %> - <%= products[key].price %>
+                    <a href="/product/<%= key %>">Detail</a>
+                </li>
+            <% } %>
+        </ul>
+    <% } else { %>
+        <p>No products available.</p>
+    <% } %>
+    </main>
+<%- include("./layouts/end.ejs") %>

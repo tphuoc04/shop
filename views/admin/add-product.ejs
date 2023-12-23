@@ -1,0 +1,16 @@
+
+<%- include("../layouts/head.ejs") %>
+</head>
+<body>
+    <%- include('../layouts/navigation.ejs') %>
+    <main>
+        <div class="form">
+            <h1>Add Products</h1>
+            <form action='/add-product', method='POST' class="add-product">
+                <input type="text", name='name', class='text' />
+                <input type="number", name='price', class='text' />
+                <input type="submit", name="", class='btn' />
+            </form>
+        </div>
+    </main>
+<%- include("../layouts/end.ejs") %>
