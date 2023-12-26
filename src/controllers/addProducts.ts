@@ -6,8 +6,8 @@ const getAddProduct = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const postAddProduct = (req: Request, res: Response, next: NextFunction) => {
-    const products = new Product(req.body.name, req.body.price);
-    products.add();
+    console.log(req.body)
+    const products = new Product(req.body);
     // console.log('Product: '+ Product.fetchAll((data: any) => { return data;}));
     res.redirect("/");
 }

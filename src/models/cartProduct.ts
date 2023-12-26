@@ -1,40 +1,29 @@
 import path from 'path'
 import main_path from '../../helpers/path'
 import fs from 'fs'
-import { error } from 'console';
 import Product from './product';
 const file_path = path.join(main_path, 'data', 'cartProducts.json')
 
 type Order = {
-    [id: string]: { 
-        product_id?: number
-        quantity?: number
-    }
+    id?: number
+    product_id: number
+    quantity: number
 };
 
 type inCart = {
-    [id: string]: {
-        name: string
-        quantity: number
-        price: number
-        total: number
-    }
-};
+    id: number
+    name: string
+    quantity: number
+    price: number
+    total: number
+}[];
 
-export default class cartProduct {
-    private id?: number
-    private product_id?: number
-    private quantity: number = 0
-
-    constructor({ product_id, quantity }: any = {}) {
-        this.product_id = product_id
-        this.quantity = quantity || 1
-    }
-
-    fetchProductFromFile(file_path: any, callBack: (data: any) => any) {
+export default class CartProduct {
+    
+    private static fetchProductFromFile(file_path: any, callBack: (data: any) => any) {
         fs.readFile(file_path, (err, productsData: any) => {
             if (err) {
-                return callBack({});
+                return callBack([]);
             } else {
                 try {
                     // parsed data to JSON
@@ -45,22 +34,21 @@ export default class cartProduct {
                     // Parsing file Error
                     console.log('Parsing Error');
                     console.log(error);
-
+                    
                     // return empty array of product
-                    callBack({});
+                    callBack([]);
                 }
             }
         })
     }
-
-    add(): void{
-        this.fetchProductFromFile(file_path, (data: any) => {
-            let orders: Order = data;
-            const orderId = Object.keys(orders).length.toString()
-            orders[orderId] = { 
-                "product_id": this.product_id, 
-                "quantity": this.quantity
-            }
+    
+    private add({product_id, quantity}: Order): void{
+        CartProduct.fetchProductFromFile(file_path, (data: any) => {
+            let orders: Order[] = data;
+            orders.push({ 
+                id: orders.length,
+                product_id: product_id, 
+                quantity: quantity})
             fs.writeFile(file_path, JSON.stringify(orders), (err) => {
                 if (err) {
                     console.log('Write File Error');
@@ -71,32 +59,35 @@ export default class cartProduct {
             })
         })
     }
+    
+    constructor({ product_id, quantity }: {product_id?: number, quantity?: number} = {}) {
+        if (product_id != undefined) {
+            quantity = quantity?quantity:1
+            this.add({ product_id, quantity})
+        }
+    }
 
-    static inCartProduct(callBack: (data: any) => any) {
-        const products = new cartProduct();
-        products.fetchProductFromFile(file_path, (data) => {
-            Product.fetchAll(
-                (products) => {
-                    const orderId = Object.keys(data)
-                    const productsArray = Object.entries(products)
-                    let ordedCart: inCart = {}
-                    for (let key in data) {
-                        ordedCart[key] = {
-                            name: products[data[key].product_id].name,
-                            quantity: data[key].quantity,
-                            price: products[data[key].product_id].price,
-                            total: data[key].quantity * products[data[key].product_id].price
-                        }
-                    }
-                    console.log(ordedCart)
-                    return callBack(ordedCart)
-                }
-            )
+    static inCartProduct(fun: (data: any) => any) {
+        CartProduct.fetchAll((orders) => {
+            Product.fetchAll((products) => {
+                if (orders.length ==0 || products.length == 0) {
+                    return []
+                } 
+                const cart: inCart = orders.map((order: Order) => {
+                    return {id: order.id,
+                            name: products[order.product_id].name,
+                            price: products[order.product_id].price,
+                            quantity: order.quantity,
+                            total: order.quantity * products[order.product_id].price}
+                })
+                console.log(cart)
+                fun(cart)
+            })
         })
     }
 
     static fetchAll(fun: (data: any) => any) {
-        const products = new cartProduct();
-        products.fetchProductFromFile(file_path, (data) => fun(data))
+        const products = new CartProduct();
+        CartProduct.fetchProductFromFile(file_path, (data) => fun(data))
     }
 }

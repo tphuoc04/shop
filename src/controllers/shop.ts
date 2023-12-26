@@ -5,7 +5,8 @@ const products = new Product("");
 
 const getShop = (req: Request, res: Response) => {
     Product.fetchAll((data) => {
-        res.render('index', {title: "Shop", products: data})
+        // res.render('index', {title: "Shop", products: data})
+        res.send(data)
         // console.log(products)
     })
 }

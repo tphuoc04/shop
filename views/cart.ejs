@@ -4,13 +4,13 @@
     <%- include('./layouts/navigation.ejs') %>
     <main>
         <h1>Cart</h1>
-        <% if (Object.keys(cartProducts).length > 0) { %>
+        <% if (cartProducts.length > 0) { %>
             <ul>
-            <% for(let key in cartProducts) { %>
+            <% for(let product of cartProducts) { %>
                 <li>
-                    <%= cartProducts[key].name %> - <%= cartProducts[key].price %>
+                    <%= product.name %> - <%= product.price %>
                     <br>
-                    <p>quantity: <%= cartProducts[key].quantity %> total: <%= cartProducts[key].total %>
+                    <p>quantity: <%= product.quantity %> total: <%= product.total %>
                 </li>
             <% } %>
             </ul>

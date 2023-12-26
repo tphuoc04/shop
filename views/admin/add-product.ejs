@@ -7,8 +7,10 @@
         <div class="form">
             <h1>Add Products</h1>
             <form action='/add-product', method='POST' class="add-product">
-                <input type="text", name='name', class='text' />
-                <input type="number", name='price', class='text' />
+                <input required type="text" placeholder="Name" name='name' class='text' />
+                <input required type="number" placeholder="Price" name='price' class='text' />
+                <input type="number" placeholder="imgURL" name='imgURL', class='text' />
+                <input type="number" placeholder="Description" name='description', class='text' />
                 <input type="submit", name="", class='btn' />
             </form>
         </div>

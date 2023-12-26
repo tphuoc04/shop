@@ -4,12 +4,12 @@
     <%- include('./layouts/navigation.ejs') %>
     <main>
     <h1>Products</h1>
-    <% if (Object.keys(products).length > 0) { %>
+    <% if (products.length > 0) { %>
         <ul class="product-list">
-            <% for (let key in products) { %>
+            <% for (let product of products) { %>
                 <li>
-                    <%= products[key].name %> - <%= products[key].price %>
-                    <a href="/product/<%= key %>">Detail</a>
+                    <%= product.name %> - <%= product.price %>
+                    <a href="/product/<%= product.id %>">Detail</a>
                 </li>
             <% } %>
         </ul>

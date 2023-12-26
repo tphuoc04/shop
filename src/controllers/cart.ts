@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from "express"
 import { cartProduct, Product } from '../models'
 
 type Order = {
-    product_id?: String
-    quantity?: number
+    product_id: number
+    quantity: number
 };
 
 const getCartProducts = (req: Request, res: Response, next: NextFunction) => {
@@ -16,12 +16,11 @@ const getCartProducts = (req: Request, res: Response, next: NextFunction) => {
 
 const postCartProducts = (req: Request, res: Response, next: NextFunction) => {
     const order: Order = { 
-        "product_id": req.params.id,
-        "quantity": req.body.quantity
+        product_id: parseFloat(req.params.id),
+        quantity: parseFloat(req.body.quantity)
     }
 
     const addToCart = new cartProduct(order);
-    addToCart.add()
     console.log('added')
     res.redirect('/cart')
 }
